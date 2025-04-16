@@ -12,6 +12,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Top link functionality
+    const topLink = document.getElementById('top-link');
+    if (topLink) {
+        topLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Slideshow functionality
+    const slideshowContainer = document.querySelector('.slideshow-container');
+    if (slideshowContainer) {
+        // Create 15 slideshow images
+        for (let i = 1; i <= 15; i++) {
+            const img = document.createElement('img');
+            img.src = `images/Slideshow Pic ${i}.jpg`;
+            img.alt = `Slideshow Image ${i}`;
+            img.className = 'slideshow-image';
+            img.loading = 'lazy'; // Add lazy loading
+            
+            // Make the first image active
+            if (i === 1) {
+                img.classList.add('active');
+            }
+            
+            slideshowContainer.appendChild(img);
+        }
+
+        // Slideshow rotation
+        const slideshowImages = document.querySelectorAll('.slideshow-image');
+        let currentSlide = 0;
+        
+        function rotateSlideshow() {
+            // Hide current slide
+            slideshowImages[currentSlide].classList.remove('active');
+            
+            // Move to next slide
+            currentSlide = (currentSlide + 1) % slideshowImages.length;
+            
+            // Show new slide
+            slideshowImages[currentSlide].classList.add('active');
+        }
+        
+        // Change slide every 5 seconds
+        setInterval(rotateSlideshow, 5000);
+    }
+
     // FAQ Accordion functionality
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
@@ -104,8 +154,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Contact form validation and submission
+    // Contact form validation and submission with Formspree
     const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('form-status');
+    
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -120,54 +172,106 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Simple validation
             if (!firstName || !lastName || !email || !phone || !message) {
-                alert('Please fill in all required fields.');
+                formStatus.textContent = 'Please fill in all required fields.';
+                formStatus.className = 'form-status error';
                 return;
             }
 
             // Email validation
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                alert('Please enter a valid email address.');
+                formStatus.textContent = 'Please enter a valid email address.';
+                formStatus.className = 'form-status error';
                 return;
             }
 
             // Phone validation (simple check for numbers)
             if (!/^[0-9+\-\s()]+$/.test(phone)) {
-                alert('Please enter a valid phone number.');
+                formStatus.textContent = 'Please enter a valid phone number.';
+                formStatus.className = 'form-status error';
                 return;
             }
 
-            // If validation passes, show success message
-            alert('Thank you for your message! We will contact you shortly.');
-            contactForm.reset();
+            // Submit form to Formspree
+            const formData = new FormData(contactForm);
+            
+            fetch(contactForm.action, {
+                method: contactForm.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                // Show success message
+                formStatus.textContent = 'Thank you for your message! We will contact you shortly.';
+                formStatus.className = 'form-status success';
+                contactForm.reset();
+            })
+            .catch(error => {
+                // Show error message
+                formStatus.textContent = 'Oops! There was a problem submitting your form. Please try again.';
+                formStatus.className = 'form-status error';
+            });
         });
     }
 
     // **Interactive Slider Functionality**
     let sliderIndex = 0;
 
-    function updateSlider() {
+    // Make these functions global so they can be called from HTML
+    window.updateSlider = function() {
         const slider = document.querySelector('.slider');
         slider.style.transform = `translateX(-${sliderIndex * 100}%)`;
-    }
+    };
 
-    function nextSlide() {
+    window.nextSlide = function() {
         const slides = document.querySelectorAll('.slide');
         sliderIndex = (sliderIndex + 1) % slides.length; // Loop forward
-        updateSlider();
-    }
+        window.updateSlider();
+    };
 
-    function prevSlide() {
+    window.prevSlide = function() {
         const slides = document.querySelectorAll('.slide');
         sliderIndex = (sliderIndex - 1 + slides.length) % slides.length; // Loop backward
-        updateSlider();
-    }
+        window.updateSlider();
+    };
 
     // Attach event listeners to the slider buttons
     const prevButton = document.querySelector('.slider-control.prev');
     const nextButtonSlider = document.querySelector('.slider-control.next');
 
     if (prevButton && nextButtonSlider) {
-        prevButton.addEventListener('click', prevSlide);
-        nextButtonSlider.addEventListener('click', nextSlide);
+        prevButton.addEventListener('click', window.prevSlide);
+        nextButtonSlider.addEventListener('click', window.nextSlide);
     }
+
+    // Adjust 360 viewer for mobile
+    function adjust360Viewer() {
+        const sliderContainer = document.querySelector('.slider-container');
+        const sliderFrames = document.querySelectorAll('.slider-frame');
+        
+        if (window.matchMedia("(max-aspect-ratio: 9/16)").matches) {
+            // Mobile portrait mode (9:16)
+            sliderFrames.forEach(frame => {
+                frame.style.height = '100%';
+                frame.style.width = '100%';
+            });
+        } else {
+            // Desktop or landscape mode
+            sliderFrames.forEach(frame => {
+                frame.style.height = '100%';
+                frame.style.width = '100%';
+            });
+        }
+    }
+
+    // Run on load and resize
+    adjust360Viewer();
+    window.addEventListener('resize', adjust360Viewer);
 });
