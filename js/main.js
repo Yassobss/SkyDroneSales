@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             navbar.classList.remove('scrolled');
         }
-    });
 
     // Top link functionality
     const topLink = document.getElementById('top-link');
@@ -227,30 +226,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Make these functions global so they can be called from HTML
     window.updateSlider = function() {
         const slider = document.querySelector('.slider');
-        slider.style.transform = `translateX(-${sliderIndex * 100}%)`;
-    };
+        const slides = document.querySelectorAll('.slide');
+        if (slider && slides.length > 0) {
+            slider.style.transform = `translateX(-${sliderIndex * 100}%)`;
+        }
+    }
 
+    // Move to the next slide
     window.nextSlide = function() {
         const slides = document.querySelectorAll('.slide');
-        sliderIndex = (sliderIndex + 1) % slides.length; // Loop forward
-        window.updateSlider();
+        if (slides.length > 0) {
+            sliderIndex = (sliderIndex + 1) % slides.length; // Loop forward
+            window.updateSlider();
+        }
     };
 
+    // Move to the previous slide
     window.prevSlide = function() {
         const slides = document.querySelectorAll('.slide');
-        sliderIndex = (sliderIndex - 1 + slides.length) % slides.length; // Loop backward
-        window.updateSlider();
+        if (slides.length > 0) {
+            sliderIndex = (sliderIndex - 1 + slides.length) % slides.length; // Loop backward
+            window.updateSlider();
+        }
     };
 
     // Attach event listeners to the slider buttons
     const prevButton = document.querySelector('.slider-control.prev');
     const nextButtonSlider = document.querySelector('.slider-control.next');
 
-    if (prevButton && nextButtonSlider) {
+    if (prevButton && nextButton) {
         prevButton.addEventListener('click', window.prevSlide);
         nextButtonSlider.addEventListener('click', window.nextSlide);
     }
 
+        // Initialize the slider
+    updateSlider();
+});
     // Adjust 360 viewer for mobile
     function adjust360Viewer() {
         const sliderContainer = document.querySelector('.slider-container');

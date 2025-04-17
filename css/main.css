@@ -579,7 +579,7 @@ section {
 }
 
 .slide {
-  min-width: 100%;
+  flex: 0 0 100%;
   text-align: center;
   height: 100%;
 }
@@ -715,7 +715,6 @@ section {
   .slider-container {
     aspect-ratio: 9/16;
   }
-}
 
 /* Ensure proper aspect ratio for 9:16 displays */
 @media (max-aspect-ratio: 9/16) {
@@ -723,6 +722,7 @@ section {
     aspect-ratio: 9/16;
     height: auto;
   }
+}
   
   .slider-frame {
     height: 100%;
