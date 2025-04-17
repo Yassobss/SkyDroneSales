@@ -110,6 +110,7 @@ section {
 
 .nav-links {
   display: flex;
+  justify-content: center; /* Center align the links */
   align-items: center;
 }
 
@@ -727,4 +728,135 @@ section {
   .slider-frame {
     height: 100%;
   }
+  
+/* Gallery Button Styles */
+.gallery-btn {
+  background-color: green; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 700; /* Bolder font */
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  margin: 0 auto; /* Center the button */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.gallery-btn:hover {
+  background-color: darkgreen; /* Darker green on hover */
+  transform: scale(1.1); /* Slight enlargement on hover */
+}
+
+/* Pinterest-Style Gallery */
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+}
+
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.15); /* Enlarge by 15% */
+  z-index: 10; /* Ensure it appears on top of other images */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item:hover img,
+.gallery-item:hover video {
+  transform: scale(1.1);
+}
+
+  .gallery-item {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.6s ease;
+  }
+  
+  .gallery-item.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Lightbox Styles*/
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+}
+
+/* Refined Pinterest-Style Gallery */
+.gallery-container {
+  --s: 431.25px; /* Scale up size by 15% */
+  --g: 20px;
+  --f: 1.2;
+
+  display: grid;
+  gap: var(--g);
+  grid-template-columns: repeat(3, 1fr);
+  max-width: calc(3 * var(--s) + 2 * var(--g));
+  margin: auto;
+  transform: translateY(15%); /* Move gallery down by 15% */
+}
+
+.gallery-container > img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  cursor: pointer;
+  filter: grayscale(80%);
+  transition: transform 0.35s linear, filter 0.35s linear;
+}
+
+.gallery-container img:hover {
+  filter: grayscale(0);
+  transform: scale(var(--f));
+}
+
+/* Ensure the grid container allows overlapping */
+.grid-container {
+    position: relative; /* Establish a stacking context for child elements */
+}
+
+.grid-image {
+    position: relative; /* Ensure the image is positioned relative to its container */
+    transition: transform 0.3s ease, z-index 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.grid-image:hover {
+    transform: scale(1.2); /* Enlarge the image on hover */
+    z-index: 10; /* Bring the image to the top of the stacking context */
+}
+
+.grid-container:hover .grid-image:not(:hover) {
+    transform: scale(0.8); /* Shrink non-hovered images */
+    opacity: 0.7; /* Optionally reduce opacity for non-hovered images */
 }
