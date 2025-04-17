@@ -1,3 +1,31 @@
+// 🌀 360 Image Viewer – Working Button Code Restored
+let sliderIndex = 0;
+
+// Define these globally so inline onclick works
+window.updateSlider = function () {
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slide');
+    if (slider && slides.length > 0) {
+        slider.style.transform = `translateX(-${sliderIndex * 100}%)`;
+    }
+};
+
+window.nextSlide = function () {
+    const slides = document.querySelectorAll('.slide');
+    if (slides.length > 0) {
+        sliderIndex = (sliderIndex + 1) % slides.length;
+        window.updateSlider();
+    }
+};
+
+window.prevSlide = function () {
+    const slides = document.querySelectorAll('.slide');
+    if (slides.length > 0) {
+        sliderIndex = (sliderIndex - 1 + slides.length) % slides.length;
+        window.updateSlider();
+    }
+};
+
 // Netflix-inspired JavaScript for Drone Business Website
 
 // Wait for DOM to be fully loaded
@@ -208,47 +236,10 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxContent.innerHTML = '';
     });
 
-    // **Interactive Slider Functionality**
-    let sliderIndex = 0;
+    // Remove event listeners for .slider-control.prev and .slider-control.next
+    // (since inline onclick is used in HTML, no need to add JS event listeners here)
 
-    // Make these functions global so they can be called from HTML
-    window.updateSlider = function () {
-        const slider = document.querySelector('.slider');
-        const slides = document.querySelectorAll('.slide');
-        if (slider && slides.length > 0) {
-            slider.style.transform = `translateX(-${sliderIndex * 100}%)`;
-        }
-    };
-
-    // Move to the next slide
-    window.nextSlide = function () {
-        const slides = document.querySelectorAll('.slide');
-        if (slides.length > 0) {
-            sliderIndex = (sliderIndex + 1) % slides.length; // Loop forward
-            window.updateSlider();
-        }
-    };
-
-    // Move to the previous slide
-    window.prevSlide = function () {
-        const slides = document.querySelectorAll('.slide');
-        if (slides.length > 0) {
-            sliderIndex = (sliderIndex - 1 + slides.length) % slides.length; // Loop backward
-            window.updateSlider();
-        }
-    };
-
-    // Attach event listeners to the slider buttons
-    const prevButton = document.querySelector('.slider-control.prev');
-    const nextButtonSlider = document.querySelector('.slider-control.next');
-
-    if (prevButton && nextButtonSlider) {
-        prevButton.addEventListener('click', window.prevSlide);
-        nextButtonSlider.addEventListener('click', window.nextSlide);
-    }
-
-    // Initialize the slider
-    updateSlider();
+    window.updateSlider();
 
     // Adjust 360 viewer for mobile
     function adjust360Viewer() {
