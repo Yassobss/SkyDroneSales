@@ -118,10 +118,10 @@ section {
 .contact-btn {
   background-color: var(--primary-color);
   color: var(--text-color);
-  padding: 7px 17px;
+  padding: 10px 10px;
   border-radius: 3px;
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-size: 0.800rem;
+  font-weight: bold;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
 }
 
@@ -799,7 +799,7 @@ section {
 .gallery-container {
   --s: 431.25px; /* Scale up size by 15% */
   --g: 20px;      /* Gap between images */
-  --f: 1.2;       /* Scale factor for hover effect */
+  --f: 1.5;       /* Scale factor for hover effect */
   display: grid;
   gap: var(--g);
   grid-template-columns: repeat(3, 1fr); /* Default 3 columns */
@@ -872,6 +872,7 @@ section {
 .gallery-item:hover ~ .gallery-item video {
   filter: grayscale(80%) blur(8px); /* Apply grayscale and a stronger blur (8px) to non-hovered items */
   transition: filter 0.3s ease, transform 0.3s ease;
+  transform: scale(0.5); /* Scale down non-hovered items */
 }
 
 /* Media Queries for responsiveness */
@@ -893,8 +894,10 @@ section {
 @media (max-width: 480px) {
   .gallery-container {
     grid-template-columns: 1fr; /* 1 item per row on very small screens */
-    gap: 10px; /* Reduce gap even further */
-    padding: 0 5px; /* Adjust padding */
+    gap: 50px; /* Reduce gap even further */
+    padding: 0 5px;
+    max-width: 275px; /* Adjust max width for very small screens */
+    transform: translateY(7.5%); /* Move gallery down by 25% */
   }
 }
 
@@ -911,15 +914,15 @@ section {
   color: white !important;
   background-color: green !important;
   color: white !important;
-  padding: 10px 20px !important;
-  border-radius: 5px !important;
-  font-size: 1rem !important;
-  font-weight: 700 !important;
+  padding: 10px 10px !important;
+  border-radius: 3px !important;
+  font-size: 0.800rem !important;
+  font-weight: bold !important;
   text-decoration: none !important;
   text-align: center !important;
   display: inline-block !important;
-  margin-left: -40px !important;
-  margin-right: 50px !important;
+  margin-left: 0 !important;
+  margin-right: 7px !important;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
   position: relative !important;
   z-index: 2 !important;
