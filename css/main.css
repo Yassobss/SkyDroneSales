@@ -795,80 +795,115 @@ section {
   }
 }
 
-/* Refined Pinterest-Style Gallery */
+/* Base styles for the gallery container */
 .gallery-container {
   --s: 431.25px; /* Scale up size by 15% */
-  --g: 20px;
-  --f: 1.2;
-
+  --g: 20px;      /* Gap between images */
+  --f: 1.2;       /* Scale factor for hover effect */
   display: grid;
   gap: var(--g);
-  grid-template-columns: repeat(3, 2fr);
-  max-width: calc(3 * var(--s) + 2 * var(--g));
-  margin: auto;
-  transform: translateY(15%); /* Move gallery down by 15% */
+  grid-template-columns: repeat(3, 1fr); /* Default 3 columns */
+  max-width: calc(3 * var(--s) + 2 * var(--g)); /* Max width for the gallery */
+  margin: 0 auto;  /* Center the gallery horizontally */
+  transform: translateY(25%); /* Move gallery down by 12% */
+  padding: 0 15px; /* Add some padding for responsiveness */
+  overflow: visible; /* Allow overflow for enlarged images */
 }
 
+/* Ensure the images are responsive and have the proper hover effects */
 .gallery-container > img {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  cursor: pointer;
+  aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio for images */
+  object-fit: cover;    /* Ensure images cover the container without distortion */
+  cursor: pointer;     /* Show pointer on hover */
   filter: grayscale(80%);
-  transition: transform 0.35s linear, filter 0.35s linear;
+  transition: transform 0.35s linear, filter 0.35s linear, z-index 0.3s ease;
+  position: relative;   /* Position relative for z-index manipulation */
+  z-index: 1;           /* Default z-index for images */
 }
 
+/* Hover effect: Make the image colorful, enlarge it, and bring it to the top */
 .gallery-container img:hover {
-  filter: grayscale(0);
-  transform: scale(var(--f));
+  filter: grayscale(0); /* Remove grayscale on hover */
+  transform: scale(var(--f)); /* Scale up the image */
+  z-index: 10; /* Bring the hovered image above the rest */
 }
 
-/* Ensure the grid container allows overlapping */
-.grid-container {
-    position: relative; /* Establish a stacking context for child elements */
-}
-
-.grid-image {
-    position: relative; /* Ensure the image is positioned relative to its container */
-    transition: transform 0.3s ease, z-index 0.3s ease; /* Smooth transition for hover effect */
-}
-
-.grid-image:hover {
-    transform: scale(2); /* Enlarge the image on hover */
-    z-index: 10; /* Bring the image to the top of the stacking context */
-}
-
-.grid-container:hover .grid-image:not(:hover) {
-    transform: scale(0.8); /* Shrink non-hovered images */
-    opacity: 0.7; /* Optionally reduce opacity for non-hovered images */
-}
-
-/* Updated Pinterest-Style Gallery */
-.gallery-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Set grid to 3 columns */
-    gap: 5rem; /* Slightly reduce the gap between items */
-    padding: 3rem; /* Adjust padding for a smaller layout */
-    max-width: 1500px; /* Slightly smaller max width */
-    margin: auto;
-}
-
+/* Style the individual gallery items */
 .gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 6px; /* Slightly smaller border radius */
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+  position: relative;
+  /* Removed overflow: hidden here so the enlarged image is not clipped */
+  border-radius: 6px; /* Rounded corners for the images */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Light shadow around items */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+  display: flex; /* Allow the image to grow inside the container */
+  justify-content: center; /* Center the image */
+  align-items: center; /* Center the image */
+  z-index: 0; /* Ensure all items have a lower z-index by default */
 }
 
+/* Hover effects for gallery items */
 .gallery-item img,
 .gallery-item video {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
+
+/* Hover effect for gallery item: enlarge it */
+.gallery-item:hover {
+  transform: scale(1.05); /* Slightly scale the item */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhance the shadow */
+  z-index: 5; /* Raise the item's z-index so it stays on top of others, but under the hovered one */
+}
+
+/* Hover effect for other images in the container */
+.gallery-item:hover ~ .gallery-item {
+  transform: scale(0.9); /* Scale down other items */
+  opacity: 0.7; /* Reduce opacity of other images */
+  z-index: 0; /* Ensure non-hovered items stay behind */
+}
+
+/* Adding the blur effect to non-hovered images when one is hovered */
+.gallery-item:hover ~ .gallery-item img,
+.gallery-item:hover ~ .gallery-item video {
+  filter: grayscale(80%) blur(8px); /* Apply grayscale and a stronger blur (8px) to non-hovered items */
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Media Queries for responsiveness */
+
+/* For mobile portrait mode (9:16 aspect ratio) */
+@media (max-width: 768px) {
+  .gallery-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 items per row on smaller screens */
+    gap: 10px; /* Reduce gap between items */
+    padding: 0 10px; /* Adjust padding */
+  }
+
+  .gallery-item {
+    max-width: 100%; /* Make items fill up the available width */
+  }
+}
+
+/* For very small screens (portrait mode) */
+@media (max-width: 480px) {
+  .gallery-container {
+    grid-template-columns: 1fr; /* 1 item per row on very small screens */
+    gap: 10px; /* Reduce gap even further */
+    padding: 0 5px; /* Adjust padding */
+  }
+}
+
+/* For larger desktop screens */
+@media (min-width: 1200px) {
+  .gallery-container {
+    grid-template-columns: repeat(3, 1fr); /* Default to 3 columns on large screens */
+  }
+}
+
 
 .navbar .nav-links a.gallery-btn {
   background-color: green !important;
