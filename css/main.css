@@ -808,6 +808,7 @@ section {
   transform: translateY(25%); /* Move gallery down by 12% */
   padding: 0 15px; /* Add some padding for responsiveness */
   overflow: visible; /* Allow overflow for enlarged images */
+  margin-bottom: 300px; /* Adjust this as needed */
 }
 
 /* Ensure the images are responsive and have the proper hover effects */
