@@ -30,15 +30,15 @@
     <main>
         <section class="gallery-container">
             <!-- Image Items -->
-            <img src="images/gallery1.jpg" alt="Gallery Image 1" loading="lazy" />
+            <img src="images/gallery1.JPG" alt="Gallery Image 1" loading="lazy" />
             <img src="images/gallery2.jpg" alt="Gallery Image 2" loading="lazy" />
             <img src="images/gallery3.jpg" alt="Gallery Image 3" loading="lazy" />
             <img src="images/gallery4.jpg" alt="Gallery Image 4" loading="lazy" />
             <img src="images/gallery5.jpg" alt="Gallery Image 5" loading="lazy" />
             <img src="images/gallery6.jpg" alt="Gallery Image 6" loading="lazy" />
-            <img src="images/gallery7.jpg" alt="Gallery Image 7" loading="lazy" />
-            <img src="images/gallery8.jpg" alt="Gallery Image 8" loading="lazy" />
-            <img src="images/gallery9.jpg" alt="Gallery Image 9" loading="lazy" />
+            <img src="images/gallery7.JPG" alt="Gallery Image 7" loading="lazy" />
+            <img src="images/gallery8.JPG" alt="Gallery Image 8" loading="lazy" />
+            <img src="images/gallery9.JPG" alt="Gallery Image 9" loading="lazy" />
         </section>
     </main>
     
@@ -69,6 +69,51 @@
             }
         });
     </script>
-    <script src="js/main.js"></script>
+
+<div class="ba-section">
+    <div class="ba-slider">
+      <div class="resize">
+        <img src="images/after.jpg" alt="After image" class="after-img">
+      </div>
+      <img src="images/before.jpg" alt="Before image" class="before-img">
+      <div class="handle"></div>
+    </div>
+  
+    <p class="slider-caption">
+      Orthophotograph of Crymlyn Burrows SSSI and the corner of Swansea University’s Bay Campus. This visual showcases advanced aerial imagery services offered by our team.</p> 
+    <p>Google Earth Satellite Image vs Orthophotograph. </p>
+  </div>
+  
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const slider = document.querySelector(".ba-slider");
+      const resize = slider.querySelector(".resize");
+      const handle = slider.querySelector(".handle");
+  
+      let isDown = false;
+  
+      const startDrag = (e) => {
+        isDown = true;
+        moveDrag(e);
+      };
+  
+      const stopDrag = () => {
+        isDown = false;
+      };
+  
+      const moveDrag = (e) => {
+        if (!isDown) return;
+        let x = e.pageX - slider.getBoundingClientRect().left;
+        x = Math.max(0, Math.min(x, slider.offsetWidth));
+        handle.style.left = `${x}px`;
+        resize.style.width = `${x}px`;
+      };
+  
+      handle.addEventListener("mousedown", startDrag);
+      window.addEventListener("mouseup", stopDrag);
+      window.addEventListener("mousemove", moveDrag);
+    });
+</script> 
 </body>
 </html>

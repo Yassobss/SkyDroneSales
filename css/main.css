@@ -937,3 +937,61 @@ section {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
   z-index: 10 !important;
 }
+
+.ba-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
+  margin-bottom: 6rem;
+}
+
+.ba-slider {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.ba-slider img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.resize {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  background: white;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+  cursor: ew-resize;
+  z-index: 3;
+}
+
+.slider-caption {
+  margin-top: 1rem;
+  max-width: 700px;
+  font-size: 1rem;
+  color: #ff0000;
+  text-align: center;
+}
