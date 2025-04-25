@@ -28,19 +28,88 @@
 
     <!-- Gallery Section -->
     <main>
-        <section class="gallery-container">
+        <section class="gallery-switcher" style="display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;">
+            <button id="gallery-prev-btn" class="gallery-nav-btn" aria-label="Previous Gallery" style="margin-right: 1rem;">&#8592;</button>
+            <span id="gallery-indicator" style="font-weight: bold; color: #fff;">Galleries</span>
+            <button id="gallery-next-btn" class="gallery-nav-btn" aria-label="Next Gallery" style="margin-left: 1rem;">&#8594;</button>
+        </section>
+        <section id="gallery1" class="gallery-container" style="display: grid;">
             <!-- Image Items -->
-            <img src="images/gallery1.JPG" alt="Gallery Image 1" loading="lazy" />
-            <img src="images/gallery2.jpg" alt="Gallery Image 2" loading="lazy" />
-            <img src="images/gallery3.jpg" alt="Gallery Image 3" loading="lazy" />
-            <img src="images/gallery4.jpg" alt="Gallery Image 4" loading="lazy" />
-            <img src="images/gallery5.jpg" alt="Gallery Image 5" loading="lazy" />
-            <img src="images/gallery6.jpg" alt="Gallery Image 6" loading="lazy" />
-            <img src="images/gallery7.JPG" alt="Gallery Image 7" loading="lazy" />
-            <img src="images/gallery8.JPG" alt="Gallery Image 8" loading="lazy" />
-            <img src="images/gallery9.JPG" alt="Gallery Image 9" loading="lazy" />
+            <img src="images/Gallery%20Image%201.jpg" alt="Gallery Image 1" loading="lazy" />
+            <img src="images/Gallery%20Image%202.jpg" alt="Gallery Image 2" loading="lazy" />
+            <img src="images/Gallery%20Image%203.jpg" alt="Gallery Image 3" loading="lazy" />
+            <img src="images/Gallery%20Image%204.jpg" alt="Gallery Image 4" loading="lazy" />
+            <img src="images/Gallery%20Image%205.jpg" alt="Gallery Image 5" loading="lazy" />
+            <img src="images/Gallery%20Image%206.jpg" alt="Gallery Image 6" loading="lazy" />
+            <img src="images/Gallery%20Image%207.jpg" alt="Gallery Image 7" loading="lazy" />
+            <img src="images/Gallery%20Image%208.jpg" alt="Gallery Image 8" loading="lazy" />
+            <img src="images/Gallery%20Image%209.jpg" alt="Gallery Image 9" loading="lazy" />
+        </section>
+        <section id="gallery2" class="gallery-container" style="display: none;">
+            <!-- Duplicate or different images for the second gallery -->
+            <img src="images/Gallery%202%20Image%201.jpg" alt="Gallery 2 Image 1" loading="lazy" />
+            <img src="images/Gallery%202%20Image%202.jpg" alt="Gallery 2 Image 2" loading="lazy" />
+            <img src="images/Gallery%202%20Image%203.jpg" alt="Gallery 2 Image 3" loading="lazy" />
+            <img src="images/Gallery%202%20Image%204.gif" alt="Gallery 2 Image 4" loading="lazy" />
+            <img src="images/Gallery%202%20Image%205.gif" alt="Gallery 2 Image 5" loading="lazy" />
+            <img src="images/Gallery%202%20Image%206.jpg" alt="Gallery 2 Image 6" loading="lazy" />
+            <img src="images/Gallery%202%20Image%207.jpg" alt="Gallery 2 Image 7" loading="lazy" />
+            <img src="images/Gallery%202%20Image%208.jpg" alt="Gallery 2 Image 8" loading="lazy" />
+            <img src="images/Gallery%202%20Image%209.jpg" alt="Gallery 2 Image 9" loading="lazy" />
         </section>
     </main>
+    <style>
+        .gallery-nav-btn {
+            background: #e50914;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 0 8px 2px #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .gallery-nav-btn:hover {
+            background: #b0060f;
+            transform: scale(1.1);
+        }
+    </style>
+    <script>
+        // Gallery switcher logic
+        document.addEventListener('DOMContentLoaded', function () {
+            const gallery1 = document.getElementById('gallery1');
+            const gallery2 = document.getElementById('gallery2');
+            const prevBtn = document.getElementById('gallery-prev-btn');
+            const nextBtn = document.getElementById('gallery-next-btn');
+            const indicator = document.getElementById('gallery-indicator');
+            let currentGallery = 1;
+
+            function showGallery(n) {
+                if (n === 1) {
+                    gallery1.style.display = 'grid';
+                    gallery2.style.display = 'none';
+                    indicator.textContent = 'Gallery 1';
+                } else {
+                    gallery1.style.display = 'none';
+                    gallery2.style.display = 'grid';
+                    indicator.textContent = 'Galleries';
+                }
+                currentGallery = n;
+            }
+
+            prevBtn.addEventListener('click', function () {
+                showGallery(currentGallery === 1 ? 2 : 1);
+            });
+            nextBtn.addEventListener('click', function () {
+                showGallery(currentGallery === 1 ? 2 : 1);
+            });
+        });
+    </script>
     
     <!-- Common Ninja Widget -->
     <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
