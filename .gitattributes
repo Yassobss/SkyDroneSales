@@ -1,3 +1,11 @@
 images/*.png filter=lfs diff=lfs merge=lfs -text
 images/*.jpg filter=lfs diff=lfs merge=lfs -text
 images/*.gif filter=lfs diff=lfs merge=lfs -text
+
+# Exclude specific images
+images/feature1.png -filter -diff -merge
+images/feature2.png -filter -diff -merge
+images/feature3.png -filter -diff -merge
+images/feature4.png -filter -diff -merge
+images/360Image1.JPG -filter -diff -merge
+images/360Image2.JPG -filter -diff -merge
