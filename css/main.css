@@ -855,7 +855,7 @@ section {
 
 /* Hover effect for gallery item: enlarge it */
 .gallery-item:hover {
-  transform: scale(1.05); /* Slightly scale the item */
+  transform: scale(1.5); /* Slightly scale the item */
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhance the shadow */
   z-index: 5; /* Raise the item's z-index so it stays on top of others, but under the hovered one */
 }
